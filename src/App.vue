@@ -9,13 +9,7 @@ import Index from "./pages/index.vue";
 
 export default {
   name: "app",
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
   components: { Index },
-  created() {},
 };
 </script>
 
