@@ -16,9 +16,12 @@
         <form>
           <div class="form-group">
             <label>Date</label>
-            <div class="md-form md-outline input-with-post-icon datepicker">
+            <div
+              id="datepicker"
+              class="md-form md-outline input-with-post-icon datepicker"
+            >
               <input
-                v-model="formatDate"
+                v-model="bill.date"
                 placeholder="Select date"
                 type="date"
                 class="form-control"
@@ -66,12 +69,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
           Close
         </button>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-info"
           @click="submit()"
           data-dismiss="modal"
         >
@@ -86,6 +89,7 @@
 import moment from "moment";
 
 export default {
+  components: {},
   data() {
     return {};
   },
@@ -95,7 +99,7 @@ export default {
       required: false,
       default: () => {
         return {
-          date: new Date(2015, 3, 13),
+          date: moment(),
           hour: 0,
           consumption: 0,
           price: 0,
@@ -105,9 +109,10 @@ export default {
     },
   },
   computed: {
-    formatDate() {
-      return moment(this.bill.date).format("dd/mm/YYYY");
-    },
+    // formatDate() {
+    //   // return new Date();
+    //   return moment(this.bill.date).format("DD/MM/YYYY");
+    // },
   },
   methods: {
     submit() {
