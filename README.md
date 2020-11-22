@@ -1,4 +1,6 @@
-## Frontend Project setup
+## ELECTRIC BILL PROJECT (FRONTEND)
+
+### Installation
 
 ```
 npm install
@@ -8,4 +10,10 @@ npm install
 
 ```
 npm run serve
+```
+
+### Open in browser
+
+```
+http://localhost:8080/
 ```
