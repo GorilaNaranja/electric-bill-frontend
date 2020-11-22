@@ -1,7 +1,7 @@
 <template>
   <div>
-    <table class="table">
-      <thead>
+    <table class="table table-hover">
+      <thead class="thead-dark">
         <tr>
           <th scope="col">Id</th>
           <th scope="col">Date</th>

@@ -1,43 +1,25 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 
 Vue.use(Vuex);
 
-const config = { headers: { "Content-Type": "application/json" } };
-
 const state = {
-  bills: [],
+  config: { headers: { "Content-Type": "application/json" } },
+  url: "http://localhost:3000/bill",
 };
 
 const getters = {
-  bills(state) {
-    return state.bills;
+  config(state) {
+    return state.config;
   },
-};
-
-const actions = {
-  async getBills({ commit }) {
-    const { data } = await axios.get("http://localhost:3000/bill", config);
-    commit("SET_BILLS", data);
-  },
-  async getBill({ commit }) {
-    const { data } = await axios.get("http://localhost:3000/bill", config);
-    commit("SET_BILLS", data);
-  },
-};
-
-const mutations = {
-  SET_BILLS(state, bills) {
-    state.bills = bills;
+  url(state) {
+    return state.url;
   },
 };
 
 const store = new Vuex.Store({
   state,
   getters,
-  actions,
-  mutations,
 });
 
 export default store;

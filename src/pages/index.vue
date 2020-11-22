@@ -7,6 +7,7 @@
           class="btn btn-info btn-rounded btn-lg mr-1"
           data-toggle="modal"
           data-target="#editor"
+          @click="createBill()"
         >
           Create Bill
         </button>
@@ -28,7 +29,7 @@
         role="dialog"
         aria-hidden="true"
       >
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="max-width: 700px">
           <BillChart v-if="bills.length != 0" :bills="bills"></BillChart>
         </div>
       </div>
@@ -63,11 +64,7 @@ import BillsList from "../components/BillsList.vue";
 import BillEditor from "../components/BillEditor.vue";
 import BillChart from "../components/BillChart.vue";
 import axios from "axios";
-
-// import { mapActions, mapGetters } from "vuex";
-
-const config = { headers: { "Content-Type": "application/json" } };
-const url = "http://localhost:3000/bill";
+import { mapGetters } from "vuex";
 
 export default {
   components: { BillsList, BillEditor, BillChart },
@@ -77,30 +74,44 @@ export default {
       bill: {},
     };
   },
-  // computed: {
-  //   ...mapGetters(["bills"]),
-  // },
+  computed: {
+    ...mapGetters(["config", "url"]),
+  },
   methods: {
-    // ...mapActions(["getBills"]),
+    createBill() {
+      this.bill = {};
+    },
     async getBills() {
-      const response = await axios.get(url, config);
-      this.bills = response.data.data;
+      try {
+        const response = await axios.get(this.url, this.config);
+        this.bills = response.data.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     async submitBill(bill) {
-      if (bill._id) {
-        await axios.put(url + `/${bill._id}`, bill, config);
-      } else {
-        await axios.post(url, bill, config);
+      console.log(bill);
+      try {
+        if (bill._id) {
+          await axios.put(this.url + `/${bill._id}`, bill, this.config);
+        } else {
+          await axios.post(this.url, bill, this.config);
+        }
+        this.getBills();
+      } catch (error) {
+        console.log(error);
       }
-      this.getBills();
     },
     editBill(bill) {
       this.bill = bill;
-      console.log("EDIT", bill);
     },
     async deleteBill(id) {
-      await axios.delete(url + `/${id}`, config);
-      this.getBills();
+      try {
+        await axios.delete(this.url + `/${id}`, this.config);
+        this.getBills();
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   mounted() {
